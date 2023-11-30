@@ -72,15 +72,25 @@ resource "okta_user_roles" "user_roles" {
 
 resource "okta_group_role" "USER_ADMIN" {
   group_id  = ""
-  role_type = "USER_ADMIN"
+  role_type = "Admin"
 }
 
 resource "okta_group_role" "USER" {
   group_id  = ""
-  role_type = "USER"
+  role_type = "Developer"
 }
 
 resource "okta_group_role" "READ_ONLY" {
   group_id  = ""
-  role_type = "READ_ONLY"
+  role_type = "ReadOnlyUser"
+}
+
+resource "okta_group_role" "READ_ONLY" {
+  group_id  = ""
+  role_type = "HRManager"
+}
+
+resource "okta_group_role" "READ_ONLY" {
+  group_id  = ""
+  role_type = "FinanceTeam"
 }
