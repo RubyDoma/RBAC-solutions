@@ -1,7 +1,7 @@
 python -m venv venv
 source venv/Scripts/activate
 
-/// All Python files have been "blacked" and "isorted" to pass Lints checks in case these would need to be implemented ///
+/// All Python files have been formatted using 'black' and 'isort to pass Linter checks once implemented ///
 
 ### OVERVIEW ###
 - This documentation provides a foundation for implementing RBAC with Okta, Terraform, and Python scripts. Adjustments may be needed based on specific organizational requirements and infrastructure configurations.
