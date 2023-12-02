@@ -13,24 +13,24 @@ provider "okta" {
 }
 
 # Create Okta Groups
-resource "okta_group" "group_admin" {
-  name = "Group_Admin"
+resource "okta_group" "admin" {
+  name = "Admin"
 }
 
-resource "okta_group" "group_developer" {
-  name = "Group_Developer"
+resource "okta_group" "developer" {
+  name = "Developer"
 }
 
-resource "okta_group" "group_read_only_user" {
-  name = "Group_ReadOnlyUser"
+resource "okta_group" "read_only_user" {
+  name = "ReadOnlyUser"
 }
 
-resource "okta_group" "group_hr_manager" {
-  name = "Group_HRManager"
+resource "okta_group" "hr_manager" {
+  name = "HRManager"
 }
 
-resource "okta_group" "group_finance_team" {
-  name = "Group_FinanceTeam"
+resource "okta_group" "finance_team" {
+  name = "FinanceTeam"
 }
 
 # Map Users to Okta Groups
@@ -44,8 +44,8 @@ resource "okta_user" "user1" {
 resource "okta_user_group_memberships" "user1" {
   user_id = okta_user.user1.id
   groups = [
-    okta_group.group_admin.id,
-    okta_group.group_developer.id,
+    okta_group.admin.id,
+    okta_group.developer.id,
   ]
 }
 
@@ -60,6 +60,6 @@ resource "okta_user" "user2" {
 resource "okta_user_group_memberships" "user2" {
   user_id = okta_user.user2.id
   groups = [
-    okta_group.group_read_only_user.id,
+    okta_group.read_only_user.id,
   ]
 }
