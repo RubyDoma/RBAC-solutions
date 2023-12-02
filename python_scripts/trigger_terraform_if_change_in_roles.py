@@ -60,7 +60,8 @@ if set(current_roles) != set(desired_roles):
 
     # Trigger Terraform deployment
     terraform_cmd = [TERRAFORM_EXECUTABLE, "apply", "-auto-approve"]
-    subprocess.run(terraform_cmd, cwd="/path/to/terraform/directory")
+    terraform_dir = os.environ("TERRAFORM_PATH")
+    subprocess.run(terraform_cmd, cwd=terraform_dir)
 
     # Save the current state for future comparisons
     save_current_state(current_roles)

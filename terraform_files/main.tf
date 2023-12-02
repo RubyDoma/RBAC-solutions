@@ -12,85 +12,54 @@ provider "okta" {
   api_token = var.okta_api_token
 }
 
-data "okta_users" "all_users" {}
-
-data "okta_groups" "all_groups" {}
-
-data "okta_roles" "all_roles" {
+# Create Okta Groups
+resource "okta_group" "group_admin" {
+  name = "Group_Admin"
 }
 
-output "users" {
-  value = data.okta_users.all_users.users
+resource "okta_group" "group_developer" {
+  name = "Group_Developer"
 }
 
-output "groups" {
-  value = data.okta_groups.all_groups.groups
+resource "okta_group" "group_read_only_user" {
+  name = "Group_ReadOnlyUser"
 }
 
-resource "null_resource" "create_user" {
-  triggers = {
-    okta_user_roles = jsonencode(data.okta_roles.all_roles.names)
-  }
-
-  provisioner "local-exec" {
-    command = <<EOT
-      curl -X POST \
-        -H "Authorization: SSWS ${var.okta_api_token}" \
-        -H "Content-Type: application/json" \
-        -H "Accept: application/json" \
-        -d '{
-          "profile": {
-            "firstName": "",
-            "lastName": "",
-            "email": "",
-            "login": ""
-          },
-          "credentials": {
-            "password": {
-              "value": "temporary_password"
-            }
-          }
-        }' \
-        https://${var.okta_org_name}.okta.com/api/v1/users > user_response.json
-    EOT
-  }
+resource "okta_group" "group_hr_manager" {
+  name = "Group_HRManager"
 }
 
-resource "okta_user_roles" "user_roles" {
-  depends_on = [null_resource.create_user]
+resource "okta_group" "group_finance_team" {
+  name = "Group_FinanceTeam"
+}
 
-  user_id = jsondecode(file("user_response.json")).id
+# Map Users to Okta Groups
+resource "okta_user" "user1" {
+  first_name = ""
+  last_name  = ""
+  login      = "test@example.com"
+  email      = "test@example.com"
+}
 
-  roles = [
-    "Admin",
-    "Developer",
-    "ReadOnlyUser",
-    "HRManager",
-    "FinanceTeam"
+resource "okta_user_group_memberships" "user1" {
+  user_id = okta_user.user1.id
+  groups = [
+    okta_group.group_admin.id,
+    okta_group.group_developer.id,
   ]
 }
 
-resource "okta_group_role" "USER_ADMIN" {
-  group_id  = ""
-  role_type = "Admin"
+
+resource "okta_user" "user2" {
+  first_name = ""
+  last_name  = ""
+  login      = "test2@example.com"
+  email      = "test2@example.com"
 }
 
-resource "okta_group_role" "USER" {
-  group_id  = ""
-  role_type = "Developer"
-}
-
-resource "okta_group_role" "READ_ONLY" {
-  group_id  = ""
-  role_type = "ReadOnlyUser"
-}
-
-resource "okta_group_role" "READ_ONLY" {
-  group_id  = ""
-  role_type = "HRManager"
-}
-
-resource "okta_group_role" "READ_ONLY" {
-  group_id  = ""
-  role_type = "FinanceTeam"
+resource "okta_user_group_memberships" "user2" {
+  user_id = okta_user.user2.id
+  groups = [
+    okta_group.group_read_only_user.id,
+  ]
 }
