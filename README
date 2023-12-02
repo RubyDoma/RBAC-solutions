@@ -18,7 +18,7 @@ source venv/Scripts/activate
 - Create a Python script that triggers triggers a Terraform deployment if there are changes with Okta users, roles and permissions
 - Compare the current state (e.g., the list of users fetched from Okta) with a previously stored state. If there are differences, the script would indicate changes, and a Terraform deployment is triggered
 
-### MONITOR AND UPDATE PERMISSION ###
+### MONITOR AND UPDATE PERMISSIONS ###
 - Implement a periodic run of any scripts that check for changes in Okta, so to trigger Terraform deployments accordingly
 - The 'python scheduler.py' scheduler will execute scripts every day at 2:30 PM or every hour according to preferred settings
 
