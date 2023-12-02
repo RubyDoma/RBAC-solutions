@@ -7,13 +7,12 @@ source venv/Scripts/activate
 - This documentation provides a foundation for implementing RBAC with Okta, Terraform, and Python scripts. Adjustments may be needed based on specific organizational requirements and infrastructure configurations.
 
 ### CONFIGURE OKTA WITH TERRAFORM ###
-- Map Okta roles using Terraform
-- Automate the onboarding process for new users and assign appropriate roles in Okta using a null_resource and the local-exec provisioner to execute a curl command for creating a new user via Okta's API
+- Map Okta groups using Terraform
+- Automate the onboarding process for new users and assign appropriate roles in Okta
 
 ### PYTHON SCRIPTS ###
-- Write Python scripts to automate tasks related to RBAC
+- Use Python scripts to automate tasks related to RBAC
 - Automate the provisioning of users and their roles in Okta using Python, with Okta API
-- Use Terraform Python libraries to trigger Terraform deployments based on changes in Okta (e.g., when users are added or removed from groups)
 
 ### TRIGGER TERRAFORM DEPLOYMENT WITH PYTHON ###
 - Create a Python script that triggers triggers a Terraform deployment if there are changes with Okta users, roles and permissions
@@ -21,10 +20,7 @@ source venv/Scripts/activate
 
 ### MONITOR AND UPDATE PERMISSION ###
 - Implement a periodic run of any scripts that check for changes in Okta, so to trigger Terraform deployments accordingly
-- Run the main scheduler:
-    python scheduler.py
-This will execute scripts every day at 2:30 PM or every hour according to preferred settings
-
+- The 'python scheduler.py' scheduler will execute scripts every day at 2:30 PM or every hour according to preferred settings
 
 ### TESTING ###
 - Ensure that users have the correct access based on their role by simulating changes in roles or permissions to validate that the system can adapt accordingly, for instance:

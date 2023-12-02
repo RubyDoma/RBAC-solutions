@@ -19,4 +19,9 @@ variable "okta_org_domain" {
   sensitive   = true
 }
 
-
+variable "app_id" {
+  default     = ""
+  description = "okta client id"
+  type        = string
+  sensitive   = true
+}
