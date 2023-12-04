@@ -15,7 +15,7 @@ source venv/Scripts/activate
 - Automate the provisioning of users and their roles in Okta using Python, with Okta API
 
 ### TRIGGER TERRAFORM DEPLOYMENT WITH PYTHON ###
-- Create a Python script that triggers triggers a Terraform deployment if there are changes with Okta users, roles and permissions
+- Create a Python script that triggers a Terraform deployment if there are changes with Okta users, roles and permissions
 - Compare the current state (e.g., the list of users fetched from Okta) with a previously stored state. If there are differences, the script would indicate changes, and a Terraform deployment is triggered
 
 ### MONITOR AND UPDATE PERMISSIONS ###
