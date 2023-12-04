@@ -19,17 +19,14 @@ def add_user_to_group(user_id, group_id):
     return response.status_code == 204  # success
 
 
-# Example usage
 if __name__ == "__main__":
     # Create a new user
-    new_user = create_user(
-        "john.doe", "john.doe@example.com", "SecurePassword123", "John", "Doe"
-    )
+    new_user = create_user("username", "email", "password", "firstname", "lastname")
     user_id = new_user["id"]
     group_id = ""
 
-    # Add the user to a specific group
+    # Add the user to a group
     if add_user_to_group(user_id, group_id):
-        print("User added to the group successfully")
+        print("Successfully added user to the group")
     else:
         print("Failed to add user to the group")

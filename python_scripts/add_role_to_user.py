@@ -4,7 +4,7 @@ from okta import UsersClient
 
 OKTA_API_TOKEN = os.environ("OKTA_API_TOKEN")
 OKTA_DOMAIN = os.environ("OKTA_DOMAIN")
-USER_ID = "auth0|6568914b67cc79014b5d6a1e"
+USER_ID = ""
 ROLE_NAME = ""
 
 # Initialize Okta client

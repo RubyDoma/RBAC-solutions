@@ -57,7 +57,7 @@ if __name__ == "__main__":
 
         # Trigger Terraform deployment
         terraform_cmd = [TERRAFORM_EXECUTABLE, "apply", "-auto-approve"]
-        subprocess.run(terraform_cmd, cwd="/path/to/terraform/directory")
+        subprocess.run(terraform_cmd, cwd=TERRAFORM_EXECUTABLE)
 
         # Save the current state for future comparisons
         save_current_state(current_users)

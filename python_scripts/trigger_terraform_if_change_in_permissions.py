@@ -16,7 +16,6 @@ def okta_webhook():
 
     # Check if the event is related to role permission changes
     if is_role_permission_change(data):
-        # Execute Terraform commands
         terraform_dir = os.environ("TERRAFORM_PATH")
         os.chdir(terraform_dir)
         subprocess.run(["terraform", "init"])
