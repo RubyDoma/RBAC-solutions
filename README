@@ -1,7 +1,8 @@
 python -m venv venv
 source venv/Scripts/activate
 
-/// All Python files have been formatted using 'black' and 'isort to pass Linter checks once implemented ///
+### FORMATTING ###
+- Python files have been formatted using 'black' and 'isort to pass Linter checks once implemented
 
 ### OVERVIEW ###
 - This documentation provides a foundation for implementing RBAC with Okta, Terraform, and Python scripts. Adjustments may be needed based on specific organizational requirements and infrastructure configurations.
@@ -11,23 +12,13 @@ source venv/Scripts/activate
 - Automate the onboarding process for new users and assign appropriate roles in Okta
 
 ### PYTHON SCRIPTS ###
-- Use Python scripts to automate tasks related to RBAC
-- Automate the provisioning of users and their roles in Okta using Python, with Okta API
+- Use Python scripts to get information about user and their roles
+- Use a Python scripts to get Okta logs
 
 ### TRIGGER TERRAFORM DEPLOYMENT WITH PYTHON ###
-- Create a Python script that triggers a Terraform deployment if there are changes with Okta users, roles and permissions
-- Compare the current state (e.g., the list of users fetched from Okta) with a previously stored state. If there are differences, the script would indicate changes, and a Terraform deployment is triggered
+- Use Python to trigger a Terraform deployment if there are changes in Okta made outside of this script
+- Compare the current state (e.g., the list of users fetched from Okta) with a previously stored state. If there are differences, the script would indicate changes, and a Terraform deployment is triggered, so to reflect in Okta what it's declared in main.tf
 
 ### MONITOR AND UPDATE PERMISSIONS ###
 - Implement a periodic run of any script that checks for changes in Okta, so to trigger Terraform deployments accordingly
 - Scheduler.py will execute scripts every day at 2:30 PM or every hour according to preferred settings
-
-### TESTING ###
-- Test that users have the correct access based on their role by simulating changes in roles or permissions to validate that the system can adapt accordingly, for instance:
-    Adding a new role to a user
-    Removing a role from a user
-    Modifying role permissions
-using the relevant Python scripts
-
-### CONCLUSIONS ###
-- RBAC setup ensures secure and efficient management of user access to resources. Regularly review and update roles and permissions to align with organizational changes.
