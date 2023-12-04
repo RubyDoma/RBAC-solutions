@@ -1,39 +1,58 @@
 import os
+import requests
+import json
 import subprocess
 
-print(
-    "trigger_terraform_if_change_in_permissions executed"
-)  # visible in the periodic run
+OKTA_BASE_URL = os.environ("OKTA_DOMAIN")
+OKTA_API_TOKEN = os.environ("OKTA_API_TOKEN")
+ROLE_IDS_TO_MONITOR = ["roleId1", "roleId2"]
+STORED_PERMISSIONS_FILE = "stored_permissions.json"
 
-from flask import Flask, request
+def fetch_role_permissions(role_id):
+    url = f"{OKTA_BASE_URL}/api/v1/roles/{role_id}"
+    headers = {
+        "Authorization": f"SSWS {OKTA_API_TOKEN}",
+        "Accept": "application/json",
+    }
 
-app = Flask(__name__)
+    response = requests.get(url, headers=headers)
 
+    if response.status_code == 200:
+        return response.json().get("permissions", [])
+    else:
+        print(f"Error fetching role permissions for {role_id}: {response.status_code}")
+        return None
 
-@app.route("/okta-webhook", methods=["POST"])
-def okta_webhook():
-    data = request.get_json()
+def load_stored_permissions():
+    try:
+        with open(STORED_PERMISSIONS_FILE, "r") as file:
+            return json.load(file)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return {}
 
-    # Check if the event is related to role permission changes
-    if is_role_permission_change(data):
-        terraform_dir = os.environ("TERRAFORM_PATH")
-        os.chdir(terraform_dir)
-        subprocess.run(["terraform", "init"])
-        subprocess.run(["terraform", "apply", "-auto-approve"])
+def save_permissions(permissions):
+    with open(STORED_PERMISSIONS_FILE, "w") as file:
+        json.dump(permissions, file, indent=2)
 
-    return "OK", 200
+def trigger_terraform():
+    terraform_project_path = os.environ("TERRAFORM_PROJECT")
 
+    subprocess.run(["cd", terraform_project_path], check=True, shell=True)
 
-def is_role_permission_change(data):  # example
-    if "eventType" in data and data["eventType"] == "user.authentication.succeeded":
-        user_id = data.get("actor", {}).get("id")
-        client_id = data.get("client", {}).get("id")
-
-        if user_id == "desired_user_id" and client_id == "desired_client_id":
-            return True
-
-    return False
-
+    subprocess.run(["terraform", "init"], check=True, shell=True)
+    subprocess.run(["terraform", "apply", "-auto-approve"], check=True, shell=True)
 
 if __name__ == "__main__":
-    app.run(port=5000)
+    stored_permissions = load_stored_permissions()
+
+    for role_id in ROLE_IDS_TO_MONITOR:
+        current_permissions = fetch_role_permissions(role_id)
+
+        if current_permissions is not None and current_permissions != stored_permissions.get(role_id):
+            print(f"Role permissions for {role_id} have changed. Triggering Terraform.")
+            trigger_terraform()
+            # Update stored permissions
+            stored_permissions[role_id] = current_permissions
+            save_permissions(stored_permissions)
+        else:
+            print(f"Role permissions for {role_id} are unchanged.")

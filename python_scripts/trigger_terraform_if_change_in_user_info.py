@@ -15,6 +15,7 @@ OKTA_BASE_URL = os.environ("OKTA_DOMAIN")
 API_TOKEN = os.environ("OKTA_API_TOKEN")
 
 TERRAFORM_EXECUTABLE = os.environ("TERRAFORM_PATH")
+TERRAFORM_PROJECT = os.environ("TERRAFORM_PROJECT")
 
 # File to store the previous state
 STATE_FILE = "okta_state.json"
@@ -57,7 +58,7 @@ if __name__ == "__main__":
 
         # Trigger Terraform deployment
         terraform_cmd = [TERRAFORM_EXECUTABLE, "apply", "-auto-approve"]
-        subprocess.run(terraform_cmd, cwd=TERRAFORM_EXECUTABLE)
+        subprocess.run(terraform_cmd, cwd=TERRAFORM_PROJECT)
 
         # Save the current state for future comparisons
         save_current_state(current_users)

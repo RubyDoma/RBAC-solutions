@@ -11,6 +11,7 @@ OKTA_DOMAIN = os.environ("OKTA_DOMAIN")
 USER_ID = ""
 
 TERRAFORM_EXECUTABLE = os.environ("TERRAFORM_PATH")
+TERRAFORM_PROJECT = os.environ("TERRAFORM_PROJECT")
 
 # File to store the previous state
 STATE_FILE = "okta_state.json"
@@ -54,7 +55,7 @@ if set(current_roles) != set(desired_roles):
 
     # Trigger Terraform deployment
     terraform_cmd = [TERRAFORM_EXECUTABLE, "apply", "-auto-approve"]
-    terraform_dir = os.environ("TERRAFORM_PATH")
+    terraform_dir = TERRAFORM_PROJECT
     subprocess.run(terraform_cmd, cwd=terraform_dir)
 
     # Save the current state for future comparisons
