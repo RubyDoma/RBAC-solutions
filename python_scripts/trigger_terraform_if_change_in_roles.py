@@ -39,11 +39,7 @@ current_roles = get_current_user_roles()
 
 # Compare current roles with desired roles
 desired_roles = [
-    "Administrator",
-    "Developer",
     "ReadOnlyUser",
-    "HR",
-    "FinanceTeam",
 ]
 
 
