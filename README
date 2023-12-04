@@ -13,7 +13,7 @@ source venv/Scripts/activate
 
 ### PYTHON SCRIPTS ###
 - Use Python scripts to get information about users and their roles
-- Use a Python scripts to get Okta logs
+- Use a Python script to get Okta logs
 
 ### TRIGGER TERRAFORM DEPLOYMENT WITH PYTHON ###
 - Use Python to trigger a Terraform deployment if there are changes in Okta made outside of this script
