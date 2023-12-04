@@ -12,7 +12,7 @@ source venv/Scripts/activate
 - Automate the onboarding process for new users and assign appropriate roles in Okta
 
 ### PYTHON SCRIPTS ###
-- Use Python scripts to get information about user and their roles
+- Use Python scripts to get information about users and their roles
 - Use a Python scripts to get Okta logs
 
 ### TRIGGER TERRAFORM DEPLOYMENT WITH PYTHON ###
